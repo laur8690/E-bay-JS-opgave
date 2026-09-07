@@ -109,3 +109,285 @@ searchForm.addEventListener("submit", function (event) {
 
 // Vis det første banner, når siden åbner.
 showBanner();
+
+// ========================================
+// KATEGORIER
+// ========================================
+
+// Array med objekter.
+const technologyCategories = [
+  { name: "Laptops", image: "images/laptop.jpg" },
+  { name: "Computer parts", image: "images/keyboard.jpg" },
+  { name: "Smartphones", image: "images/phone.jpg" },
+  { name: "Enterprise networking", image: "images/computer.jpg" },
+  { name: "Tablets and eBooks", image: "images/tablet.jpg" },
+  { name: "Storage and blank media", image: "images/storage.jpg" },
+  { name: "Lenses and filters", image: "images/lens.jpg" },
+];
+
+const technologyGrid = document.querySelector("#technology-grid");
+
+function showTechnologyCategories() {
+  for (const category of technologyCategories) {
+    const card = document.createElement("figure");
+    card.classList.add("technology-card");
+
+    const image = document.createElement("img");
+    image.src = category.image;
+    image.alt = category.name;
+    image.loading = "lazy";
+
+    const caption = document.createElement("figcaption");
+    caption.textContent = category.name;
+
+    card.append(image, caption);
+    technologyGrid.appendChild(card);
+  }
+}
+
+showTechnologyCategories();
+
+// ========================================
+// TODAY'S DEALS
+// Alle priser her er eksempler til opgaven.
+// ========================================
+
+const deals = [
+  {
+    id: 1,
+    name: "Laptop – 8GB RAM, 256GB SSD",
+    image: "images/laptop.jpg",
+    originalPrice: 499,
+    discount: 20,
+    saved: false,
+  },
+  {
+    id: 2,
+    name: "Dyson Pure Hot + Cool Purifier | Refurbished",
+    image: "images/dyson.jpg",
+    originalPrice: 349,
+    discount: 20,
+    saved: false,
+  },
+  {
+    id: 3,
+    name: "Logitech G29 Racing Wheel and Pedals",
+    image: "images/wheel.jpg",
+    originalPrice: 299,
+    discount: 20,
+    saved: false,
+  },
+  {
+    id: 4,
+    name: "Gucci Grey Browline Men's Sunglasses",
+    image: "images/sunglasses.jpg",
+    originalPrice: 249,
+    discount: 15,
+    saved: false,
+  },
+  {
+    id: 5,
+    name: "xTool F1 Portable Laser Engraver",
+    image: "images/laser.jpg",
+    originalPrice: 999,
+    discount: 20,
+    saved: false,
+  },
+  {
+    id: 6,
+    name: "NARWAL Robot Vacuum and Mop",
+    image: "images/vacuum.jpg",
+    originalPrice: 799,
+    discount: 20,
+    saved: false,
+  },
+];
+
+const dealsTrack = document.querySelector("#deals-track");
+const dealsPrevious = document.querySelector("#deals-previous");
+const dealsNext = document.querySelector("#deals-next");
+const favoritesFilter = document.querySelector("#favorites-filter");
+const dealsStatus = document.querySelector("#deals-status");
+
+// Variablen findes uden for funktionerne,
+// så flere funktioner kan bruge den.
+let showOnlyFavorites = false;
+
+// Funktion med en parameter og en returværdi.
+// price er lokal i denne funktion.
+function formatPrice(price) {
+  return "$" + price.toFixed(2);
+}
+
+function updateFavoriteButton(button, product) {
+  button.textContent = product.saved ? "♥" : "♡";
+  button.setAttribute("aria-pressed", String(product.saved));
+
+  if (product.saved) {
+    button.setAttribute("aria-label", "Remove from saved: " + product.name);
+  } else {
+    button.setAttribute("aria-label", "Save: " + product.name);
+  }
+}
+
+function updateSavedCount() {
+  let savedCount = 0;
+
+  for (const product of deals) {
+    if (product.saved) {
+      savedCount += 1;
+    }
+  }
+
+  favoritesFilter.textContent = `Saved (${savedCount})`;
+}
+
+function showDeals() {
+  dealsTrack.replaceChildren();
+
+  let visibleCount = 0;
+
+  for (const product of deals) {
+    // && betyder "og". ! betyder "ikke".
+    // Spring over varen, hvis vi kun viser favoritter,
+    // og varen ikke er gemt.
+    if (showOnlyFavorites && !product.saved) {
+      continue;
+    }
+
+    visibleCount += 1;
+
+    const card = document.createElement("article");
+    card.classList.add("deal-card");
+
+    const imageWrapper = document.createElement("div");
+    imageWrapper.classList.add("deal-image-wrapper");
+
+    const image = document.createElement("img");
+    image.classList.add("deal-image");
+    image.src = product.image;
+    image.alt = product.name;
+    image.loading = "lazy";
+
+    const favoriteButton = document.createElement("button");
+    favoriteButton.type = "button";
+    favoriteButton.classList.add("favorite-button");
+
+    updateFavoriteButton(favoriteButton, product);
+
+    favoriteButton.addEventListener("click", function () {
+      // Skifter mellem true og false.
+      product.saved = !product.saved;
+
+      updateFavoriteButton(favoriteButton, product);
+      updateSavedCount();
+
+      if (showOnlyFavorites) {
+        showDeals();
+        favoritesFilter.focus();
+      }
+    });
+
+    const discountLabel = document.createElement("p");
+    discountLabel.classList.add("deal-discount");
+    discountLabel.textContent = `${product.discount}% OFF`;
+
+    imageWrapper.append(image, favoriteButton, discountLabel);
+
+    const title = document.createElement("h3");
+    title.textContent = product.name;
+
+    // Aritmetiske operatorer: -, * og /.
+    const reducedPrice = product.originalPrice * (1 - product.discount / 100);
+
+    const price = document.createElement("p");
+    price.classList.add("deal-price");
+    price.textContent = formatPrice(reducedPrice);
+
+    const oldPrice = document.createElement("p");
+    oldPrice.classList.add("deal-old-price");
+
+    const crossedOutPrice = document.createElement("s");
+    crossedOutPrice.textContent = formatPrice(product.originalPrice);
+
+    oldPrice.append("Was: ", crossedOutPrice);
+    card.append(imageWrapper, title, price, oldPrice);
+    dealsTrack.appendChild(card);
+  }
+
+  if (visibleCount === 0) {
+    dealsStatus.textContent = "No saved products yet.";
+  } else {
+    dealsStatus.textContent = `${visibleCount} products · Demo prices`;
+  }
+
+  updateSavedCount();
+  updateDealArrows();
+}
+
+// ========================================
+// FAVORITFILTER
+// ========================================
+
+favoritesFilter.addEventListener("click", function () {
+  showOnlyFavorites = !showOnlyFavorites;
+
+  favoritesFilter.setAttribute("aria-pressed", String(showOnlyFavorites));
+
+  showDeals();
+  dealsTrack.scrollLeft = 0;
+  updateDealArrows();
+});
+
+// ========================================
+// PILE TIL PRODUKTRÆKKEN
+// ========================================
+
+function updateDealArrows() {
+  const maximumScroll = dealsTrack.scrollWidth - dealsTrack.clientWidth;
+
+  dealsPrevious.disabled = dealsTrack.scrollLeft <= 1;
+  dealsNext.disabled = dealsTrack.scrollLeft >= maximumScroll - 1;
+}
+
+function moveDeals(direction) {
+  const firstCard = dealsTrack.querySelector(".deal-card");
+
+  if (!firstCard) {
+    return;
+  }
+
+  // Kortets bredde plus afstanden mellem kortene.
+  const distance = firstCard.getBoundingClientRect().width + 16;
+
+  dealsTrack.scrollBy({
+    left: distance * direction,
+    behavior: "smooth",
+  });
+}
+
+dealsPrevious.addEventListener("click", function () {
+  moveDeals(-1);
+});
+
+dealsNext.addEventListener("click", function () {
+  moveDeals(1);
+});
+
+dealsTrack.addEventListener("scroll", updateDealArrows);
+window.addEventListener("resize", updateDealArrows);
+
+// ========================================
+// TILBAGE TIL TOPPEN
+// ========================================
+
+const backToTopButton = document.querySelector("#back-to-top");
+
+backToTopButton.addEventListener("click", function () {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+});
+
+showDeals();

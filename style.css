@@ -271,3 +271,332 @@ main {
     padding: 32px 24px 20px;
   }
 }
+
+/* Fælles overskrifter */
+.products-section h2,
+.deals-section h2 {
+  margin: 0 0 20px;
+  font-size: 28px;
+  letter-spacing: -0.7px;
+}
+
+/* Syv kategorier på en række */
+.technology-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.technology-card {
+  margin: 0;
+}
+
+.technology-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 20px;
+  background-color: #ededed;
+  object-fit: contain;
+}
+
+.technology-card figcaption {
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* Lysegråt banner */
+.shopping-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-top: 64px;
+  padding: 34px;
+  border-radius: 20px;
+  background-color: #f7f7f7;
+}
+
+.shopping-banner h2 {
+  margin: 0 0 10px;
+  font-size: clamp(26px, 3vw, 36px);
+  letter-spacing: -1px;
+}
+
+.shopping-banner p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.campaign-button {
+  display: inline-block;
+  flex-shrink: 0;
+  padding: 14px 24px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.dark-button {
+  background-color: #191919;
+  color: white;
+}
+
+.light-button {
+  background-color: #e5dcff;
+  color: #4d28d9;
+}
+
+.campaign-button:hover {
+  opacity: 0.85;
+}
+
+/* Lilla banner */
+.shipping-banner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  min-height: 350px;
+  margin-top: 50px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: #5935ef;
+  color: #eee6ff;
+}
+
+.shipping-content {
+  align-self: center;
+  padding: 44px;
+}
+
+.shipping-content h2 {
+  margin: 0 0 18px;
+  font-size: clamp(28px, 3vw, 42px);
+  letter-spacing: -1px;
+}
+
+.shipping-content p {
+  margin: 0 0 24px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.shipping-image {
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+  object-fit: cover;
+}
+
+/* Today's Deals */
+.deals-section {
+  margin-top: 54px;
+  scroll-margin-top: 24px;
+}
+
+.deals-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.deals-heading h2 {
+  margin-bottom: 6px;
+}
+
+.deals-heading p {
+  margin: 0;
+  color: #707070;
+  font-size: 18px;
+}
+
+.favorites-filter {
+  padding: 10px 18px;
+  border: 1px solid #191919;
+  border-radius: 24px;
+  background-color: white;
+  white-space: nowrap;
+}
+
+.favorites-filter[aria-pressed="true"] {
+  background-color: #191919;
+  color: white;
+}
+
+.deals-status {
+  min-height: 20px;
+  margin: 14px 0;
+  color: #707070;
+  font-size: 14px;
+}
+
+.deals-carousel {
+  position: relative;
+}
+
+.deals-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  scroll-snap-type: x proximity;
+}
+
+.deal-card {
+  flex: 0 0 calc((100% - 64px) / 5);
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.deal-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background-color: #f3f3f3;
+}
+
+.deal-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 16px;
+  object-fit: contain;
+}
+
+.favorite-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+  color: #191919;
+  font-size: 27px;
+}
+
+.favorite-button[aria-pressed="true"] {
+  color: #c82940;
+}
+
+.deal-discount {
+  margin: 0;
+  padding: 8px 12px 16px;
+  color: #bd2439;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.deal-card h3 {
+  margin: 14px 0 10px;
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+.deal-price {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.deal-old-price {
+  margin: 0;
+  color: #707070;
+  font-size: 14px;
+}
+
+.deal-arrow {
+  position: absolute;
+  top: 35%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 2px 5px #00000015;
+  font-size: 30px;
+}
+
+.deal-arrow-left {
+  left: -16px;
+}
+
+.deal-arrow-right {
+  right: -16px;
+}
+
+.deal-arrow:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.page-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-top: 64px;
+  padding: 28px 0;
+  border-top: 1px solid #ddd;
+  color: #707070;
+  font-size: 13px;
+}
+
+.page-bottom button {
+  padding: 10px 16px;
+  border: 1px solid #ddd;
+  border-radius: 24px;
+  background-color: white;
+}
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .technology-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .deal-card {
+    flex-basis: calc((100% - 32px) / 3);
+  }
+
+  .shipping-content {
+    padding: 30px;
+  }
+}
+
+/* Mobil */
+@media (max-width: 600px) {
+  .technology-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .shopping-banner {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .shipping-banner {
+    grid-template-columns: 1fr;
+  }
+
+  .shipping-image {
+    height: 240px;
+    min-height: 0;
+  }
+
+  .deal-card {
+    flex-basis: 75%;
+  }
+}
