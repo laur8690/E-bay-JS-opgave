@@ -600,3 +600,262 @@ main {
     flex-basis: 75%;
   }
 }
+
+/* Afstand og overskrift */
+.deals-section {
+  margin-top: 48px;
+}
+
+.deals-heading {
+  margin-bottom: 28px;
+}
+
+.deals-heading h2 {
+  margin: 0 0 5px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+}
+
+.deals-heading p {
+  font-size: 18px;
+  color: #707070;
+}
+
+/* Skjul produktoptællingen visuelt.
+   Behold beskeden synlig, når listen er tom. */
+.deals-status:not(:has(+ .deals-carousel .deal-card)) {
+  margin: 0 0 20px;
+}
+
+.deals-status:has(+ .deals-carousel .deal-card) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Fem produkter og lidt af det næste */
+.deals-track {
+  gap: 16px;
+  scrollbar-width: none;
+}
+
+.deals-track::-webkit-scrollbar {
+  display: none;
+}
+
+.deal-card {
+  flex: 0 0 calc((100% - 80px) / 5.6);
+  min-width: 0;
+}
+
+/* Kvadratisk billedfelt inklusive tilbudsteksten */
+.deal-image-wrapper {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1;
+  border-radius: 18px;
+  background-color: #f3f3f3;
+}
+
+.deal-image {
+  flex: 1;
+  min-height: 0;
+  height: 0;
+  width: 100%;
+  aspect-ratio: auto;
+  padding: 18px 16px 8px;
+  object-fit: contain;
+}
+
+.deal-discount {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 8px 12px 16px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #bd2439;
+}
+
+/* Mindre, tydeligere hjerter */
+.favorite-button {
+  top: 9px;
+  right: 9px;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+  color: #191919;
+  transition: background-color 0.15s ease;
+}
+
+.favorite-button svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  overflow: visible;
+}
+
+.favorite-button svg path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.favorite-button:hover {
+  background-color: #e9e9e9;
+}
+
+/* Et gemt produkt får et udfyldt hjerte */
+.favorite-button[aria-pressed="true"] {
+  color: #191919;
+}
+
+.favorite-button[aria-pressed="true"] svg path {
+  fill: currentColor;
+}
+
+/* Produktnavn på højst to linjer */
+.deal-card h3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  min-height: 42px;
+  margin: 14px 0 10px;
+  font-size: 15px;
+  line-height: 21px;
+  font-weight: 400;
+}
+
+/* Priser ved siden af hinanden, når der er plads */
+.deal-price {
+  display: inline;
+  margin: 0 6px 0 0;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.deal-old-price {
+  display: inline;
+  font-size: 12px;
+  color: #707070;
+}
+
+/* Runde knapper med tegnede pile */
+.deal-arrow {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #dedede;
+  background-color: white;
+  box-shadow: 0 1px 3px #00000026;
+  font-size: 0;
+}
+
+.deal-arrow::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #191919;
+  border-right: 2px solid #191919;
+}
+
+.deal-arrow-left {
+  left: -18px;
+}
+
+.deal-arrow-left::before {
+  transform: translateX(2px) rotate(-135deg);
+}
+
+.deal-arrow-right {
+  right: -18px;
+}
+
+.deal-arrow-right::before {
+  transform: translateX(-2px) rotate(45deg);
+}
+
+.deal-arrow:hover:not(:disabled) {
+  background-color: #f5f5f5;
+}
+
+/* Mere diskret favoritfilter */
+.favorites-filter {
+  padding: 8px 16px;
+  font-size: 14px;
+  border-color: #c7c7c7;
+}
+
+@media (max-width: 1000px) {
+  .deal-card {
+    flex-basis: calc((100% - 48px) / 3.3);
+  }
+}
+
+@media (max-width: 600px) {
+  .deal-card {
+    flex-basis: 72%;
+  }
+
+  .deals-heading h2 {
+    font-size: 25px;
+  }
+
+  .deal-arrow-left {
+    left: -10px;
+  }
+
+  .deal-arrow-right {
+    right: -10px;
+  }
+}
+
+/* Skjul de gamle tekstpile */
+.banner-arrows button,
+.deal-arrow {
+  padding: 0;
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Bannerknapperne skal være reference for pilens placering */
+.banner-arrows button {
+  position: relative;
+}
+
+/* Tegn pilene og placér dem midt i cirklen */
+.banner-arrows button::before,
+.deal-arrow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  box-sizing: border-box;
+  border: 0;
+  border-top: 2px solid #191919;
+  border-right: 2px solid #191919;
+}
+
+/* Venstrepile */
+#previous-banner::before,
+#deals-previous::before {
+  transform: translate(-35%, -50%) rotate(-135deg);
+}
+
+/* Højrepile */
+#next-banner::before,
+#deals-next::before {
+  transform: translate(-65%, -50%) rotate(45deg);
+}

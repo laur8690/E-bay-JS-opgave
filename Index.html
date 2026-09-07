@@ -60,6 +60,7 @@
     </header>
 
     <main>
+      <!-- DET STORE BANNER -->
       <section
         class="hero"
         aria-label="Featured campaigns"
@@ -95,48 +96,7 @@
         </div>
       </section>
 
-    <p id="deals-status" class="deals-status" aria-live="polite"></p>
-
-        <div class="deals-carousel">
-          <button
-            id="deals-previous"
-            class="deal-arrow deal-arrow-left"
-            type="button"
-            aria-label="Previous products"
-            aria-controls="deals-track"
-          >
-            ‹
-          </button>
-
-      <!-- Det lyse banner -->
-      <section class="shopping-banner">
-        <div>
-          <h2>Shopping made easy</h2>
-          <p>Enjoy reliability, secure deliveries and hassle-free returns.</p>
-        </div>
-
-        <a class="campaign-button dark-button" href="#deals"> Start now </a>
-      </section>
-
-      <!-- Det lilla banner -->
-      <section class="shipping-banner">
-        <div class="shipping-content">
-          <h2>Shop the world. Ship for free.</h2>
-
-          <p>Discover international finds with free shipping included.</p>
-
-          <a class="campaign-button light-button" href="#deals"> Shop now </a>
-        </div>
-
-        <img
-          class="shipping-image"
-          src="images/shipping.jpg"
-          alt="A selection of fashion, technology and collectibles"
-          loading="lazy"
-        />
-      </section>
-
-      <!-- Tilbud -->
+      <!-- TODAY'S DEALS: HELE CAROUSELLEN -->
       <section id="deals" class="deals-section" aria-labelledby="deals-title">
         <div class="deals-heading">
           <div>
@@ -154,7 +114,20 @@
           </button>
         </div>
 
-          <!-- JavaScript indsætter produkterne her -->
+        <p id="deals-status" class="deals-status" aria-live="polite"></p>
+
+        <div class="deals-carousel">
+          <button
+            id="deals-previous"
+            class="deal-arrow deal-arrow-left"
+            type="button"
+            aria-label="Previous products"
+            aria-controls="deals-track"
+          >
+            ‹
+          </button>
+
+          <!-- Jeres JavaScript indsætter produkterne her -->
           <div id="deals-track" class="deals-track"></div>
 
           <button
@@ -169,8 +142,38 @@
         </div>
       </section>
 
+      <!-- DET LYSE BANNER -->
+      <section class="shopping-banner">
+        <div>
+          <h2>Shopping made easy</h2>
+          <p>Enjoy reliability, secure deliveries and hassle-free returns.</p>
+        </div>
+
+        <a class="campaign-button dark-button" href="#deals"> Start now </a>
+      </section>
+
+      <!-- DET LILLA BANNER -->
+      <section class="shipping-banner">
+        <div class="shipping-content">
+          <h2>Shop the world. Ship for free.</h2>
+
+          <p>Discover international finds with free shipping included.</p>
+
+          <a class="campaign-button light-button" href="#deals"> Shop now </a>
+        </div>
+
+        <img
+          class="shipping-image"
+          src="images/shipping.jpg"
+          alt="A selection of fashion, technology and collectibles"
+          loading="lazy"
+        />
+      </section>
+
+      <!-- SIDENS BUND -->
       <div class="page-bottom">
         <p>Student project · Not affiliated with eBay</p>
+
         <button id="back-to-top" type="button">Back to top ↑</button>
       </div>
     </main>

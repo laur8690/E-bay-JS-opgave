@@ -183,7 +183,26 @@ function formatPrice(price) {
 }
 
 function updateFavoriteButton(button, product) {
-  button.textContent = product.saved ? "♥" : "♡";
+  button.innerHTML = `
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+        >
+            <path d="
+                M20.8 4.6
+                a5.5 5.5 0 0 0-7.8 0
+                L12 5.7
+                l-1.1-1.1
+                a5.5 5.5 0 0 0-7.8 7.8
+                L12 21
+                l8.8-8.6
+                a5.5 5.5 0 0 0 0-7.8
+                Z
+            " />
+        </svg>
+    `;
+
   button.setAttribute("aria-pressed", String(product.saved));
 
   if (product.saved) {
