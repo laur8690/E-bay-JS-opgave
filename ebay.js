@@ -641,7 +641,7 @@ setTimeout(showNewsletterPopup, 1000);
 // KATEGORIER
 // ========================================
 
-// Array med kategorier
+// 4 Array med kategorier
 const categories = [
   "Saved",
   "Electronics",
