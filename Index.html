@@ -1,18 +1,104 @@
-<!DOCTYPE html>
-<html lang="da">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
+    <title>eBay – studieprojekt</title>
 
-    <!-- Tegnsæt -->
-    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css" />
 
-    <!-- Gør siden responsiv på mobil -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- defer gør, at JavaScript kører, når HTML er indlæst -->
+    <script src="ebay.js" defer></script>
+  </head>
 
-    <!-- Forbinder HTML med ekstern CSS -->
-    <link rel="stylesheet" href="style.css">
+  <body>
+    <header>
+      <div class="topbar">
+        <span>Hi! Sign in or register</span>
 
-    <!-- Titel i browser fanen -->
-    <title>E-Bay rekonstruktion</title>
+        <div class="topbar-links">
+          <span>Deals</span>
+          <span>Brand Outlet</span>
+          <span>Help & Contact</span>
+        </div>
 
-</head>
+        <span class="my-ebay">My eBay</span>
+      </div>
+
+      <div class="search-header">
+        <a class="logo" href="./Index.html" aria-label="eBay home">
+          <span>e</span><span>b</span><span>a</span><span>y</span>
+        </a>
+
+        <span class="shop-category">Shop by<br />category</span>
+
+        <!-- Søgefunktionen tilføjer vi i næste del -->
+        <form class="search-form" role="search">
+          <input
+            type="search"
+            id="search-input"
+            aria-label="Search for anything"
+            placeholder="Search for anything"
+          />
+
+          <button class="search-button" type="submit">Search</button>
+        </form>
+      </div>
+
+      <nav class="categories" aria-label="Categories">
+        <button type="button">Saved</button>
+        <button type="button">Electronics</button>
+        <button type="button">Motors</button>
+        <button type="button">Fashion</button>
+        <button type="button">Collectibles and art</button>
+        <button type="button">Sports</button>
+        <button type="button">Health and beauty</button>
+        <button type="button">Home and garden</button>
+        <button type="button">Deals</button>
+      </nav>
+    </header>
+
+    <main>
+      <section
+        class="hero"
+        aria-label="Featured campaigns"
+        aria-roledescription="carousel"
+      >
+        <div class="hero-content" aria-live="polite">
+          <p class="hero-label">Discover something new</p>
+          <h1 id="banner-title"></h1>
+          <p id="banner-description"></p>
+        </div>
+
+        <div class="banner-footer">
+          <div
+            id="banner-dots"
+            class="banner-dots"
+            role="group"
+            aria-label="Choose banner"
+          ></div>
+
+          <div class="banner-arrows">
+            <button
+              id="previous-banner"
+              type="button"
+              aria-label="Previous banner"
+            >
+              ‹
+            </button>
+
+            <button id="next-banner" type="button" aria-label="Next banner">
+              ›
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="products-section">
+        <h2>The future in your hands</h2>
+        <p>Her tilføjer vi jeres produkter i næste trin.</p>
+      </section>
+    </main>
+  </body>
+</html>
