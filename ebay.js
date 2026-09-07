@@ -1,51 +1,43 @@
-// ARRAY OG OBJEKTER
-// Hvert objekt indeholder information om ét banner.
+// ========================================
+// BANNER: VIDEO, BILLEDE OG VIDEO
+// ========================================
+
+// Array med objekter.
 const banners = [
   {
-    title: "All your faves are here",
-    description: "Refresh your space, elevate your style and power your work.",
-    backgroundColor: "#00a0e8",
-    textColor: "#002b45",
+    type: "video",
+    src: "media/banner-1.mp4",
+    description: "Fashion campaign",
   },
   {
-    title: "Discover your next favorite",
-    description: "Explore fashion, accessories and everyday essentials.",
-    backgroundColor: "#f6b4ce",
-    textColor: "#4a1230",
+    type: "image",
+    src: "media/banner-2.jpg",
+    description: "Electronics campaign",
   },
   {
-    title: "Big ideas. Great finds.",
-    description: "Find the technology to bring your ideas to life.",
-    backgroundColor: "#c5e5b4",
-    textColor: "#173b23",
+    type: "video",
+    src: "media/banner-3.mp4",
+    description: "Home and garden campaign",
   },
 ];
 
-// DOM
-// Vi finder de HTML-elementer, som JavaScript skal arbejde med.
-const banner = document.querySelector(".hero");
-const bannerTitle = document.querySelector("#banner-title");
-const bannerDescription = document.querySelector("#banner-description");
+// Find HTML-elementerne.
+const bannerMedia = document.querySelector("#banner-media");
 const dotsContainer = document.querySelector("#banner-dots");
 const previousButton = document.querySelector("#previous-banner");
 const nextButton = document.querySelector("#next-banner");
 
-// LET
-// Denne værdi ændrer sig, når brugeren skifter banner.
-// Arrays starter ved 0, så 0 betyder det første banner.
+// Holder styr på det aktive slide.
 let currentBanner = 0;
 
-// LOOP
-// Vi opretter én knap med en prik for hvert banner.
+// Opret én prik til hvert slide.
 for (let index = 0; index < banners.length; index++) {
   const dot = document.createElement("button");
 
   dot.type = "button";
   dot.classList.add("banner-dot");
-  dot.setAttribute("aria-label", `Show banner ${index + 1}`);
+  dot.setAttribute("aria-label", `Show slide ${index + 1}`);
 
-  // EVENT
-  // Et klik på prikken viser banneret med samme index.
   dot.addEventListener("click", function () {
     currentBanner = index;
     showBanner();
@@ -54,21 +46,41 @@ for (let index = 0; index < banners.length; index++) {
   dotsContainer.appendChild(dot);
 }
 
-// FUNCTION
-// Funktionen opdaterer tekst, farver og den aktive prik.
+// Vis det valgte billede eller den valgte video.
 function showBanner() {
-  // Lokal variabel: selectedBanner findes kun i denne funktion.
+  const previousVideo = bannerMedia.querySelector("video");
+
+  // Stop den gamle video, når brugeren skifter slide.
+  if (previousVideo) {
+    previousVideo.pause();
+  }
+
+  bannerMedia.replaceChildren();
+
+  // Lokale variabler, som kun findes i denne funktion.
   const selectedBanner = banners[currentBanner];
+  let mediaElement;
 
-  bannerTitle.textContent = selectedBanner.title;
-  bannerDescription.textContent = selectedBanner.description;
-  banner.style.backgroundColor = selectedBanner.backgroundColor;
-  banner.style.color = selectedBanner.textColor;
+  if (selectedBanner.type === "video") {
+    mediaElement = document.createElement("video");
 
+    mediaElement.controls = true;
+    mediaElement.playsInline = true;
+    mediaElement.preload = "metadata";
+
+    mediaElement.setAttribute("aria-label", selectedBanner.description);
+  } else {
+    mediaElement = document.createElement("img");
+    mediaElement.alt = selectedBanner.description;
+  }
+
+  mediaElement.src = selectedBanner.src;
+  bannerMedia.appendChild(mediaElement);
+
+  // Opdater den aktive prik.
   const dots = dotsContainer.querySelectorAll(".banner-dot");
 
   for (let index = 0; index < dots.length; index++) {
-    // Sammenligningen giver en boolean: true eller false.
     const isActive = index === currentBanner;
 
     dots[index].classList.toggle("active", isActive);
@@ -76,11 +88,10 @@ function showBanner() {
   }
 }
 
-// EVENT, OPERATORER OG KONTROLSTRUKTUR
+// Næste slide.
 nextButton.addEventListener("click", function () {
   currentBanner += 1;
 
-  // Efter sidste banner starter vi forfra.
   if (currentBanner >= banners.length) {
     currentBanner = 0;
   }
@@ -88,10 +99,10 @@ nextButton.addEventListener("click", function () {
   showBanner();
 });
 
+// Forrige slide.
 previousButton.addEventListener("click", function () {
   currentBanner -= 1;
 
-  // Før første banner går vi tilbage til det sidste.
   if (currentBanner < 0) {
     currentBanner = banners.length - 1;
   }
@@ -99,20 +110,23 @@ previousButton.addEventListener("click", function () {
   showBanner();
 });
 
-// Søgefunktionen kommer senere.
-// Indtil da forhindrer vi formularen i at genindlæse siden.
+// Vis det første slide.
+showBanner();
+
+// ========================================
+// SØGEFORMULAR
+// ========================================
+
+// Forhindrer genindlæsning, indtil søgefunktionen er lavet.
 const searchForm = document.querySelector(".search-form");
 
 searchForm.addEventListener("submit", function (event) {
   event.preventDefault();
 });
 
-// Vis det første banner, når siden åbner.
-showBanner();
-
 // ========================================
 // TODAY'S DEALS
-// Alle priser her er eksempler til opgaven.
+// Alle priser er eksempler til opgaven.
 // ========================================
 
 const deals = [
@@ -172,36 +186,35 @@ const dealsNext = document.querySelector("#deals-next");
 const favoritesFilter = document.querySelector("#favorites-filter");
 const dealsStatus = document.querySelector("#deals-status");
 
-// Variablen findes uden for funktionerne,
-// så flere funktioner kan bruge den.
+// Flere funktioner bruger denne variabel.
 let showOnlyFavorites = false;
 
-// Funktion med en parameter og en returværdi.
-// price er lokal i denne funktion.
+// Returnerer en pris med to decimaler.
 function formatPrice(price) {
   return "$" + price.toFixed(2);
 }
 
+// Opdater hjertets ikon og tilgængelige beskrivelse.
 function updateFavoriteButton(button, product) {
   button.innerHTML = `
-        <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            focusable="false"
-        >
-            <path d="
-                M20.8 4.6
-                a5.5 5.5 0 0 0-7.8 0
-                L12 5.7
-                l-1.1-1.1
-                a5.5 5.5 0 0 0-7.8 7.8
-                L12 21
-                l8.8-8.6
-                a5.5 5.5 0 0 0 0-7.8
-                Z
-            " />
-        </svg>
-    `;
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="
+        M20.8 4.6
+        a5.5 5.5 0 0 0-7.8 0
+        L12 5.7
+        l-1.1-1.1
+        a5.5 5.5 0 0 0-7.8 7.8
+        L12 21
+        l8.8-8.6
+        a5.5 5.5 0 0 0 0-7.8
+        Z
+      " />
+    </svg>
+  `;
 
   button.setAttribute("aria-pressed", String(product.saved));
 
@@ -212,6 +225,7 @@ function updateFavoriteButton(button, product) {
   }
 }
 
+// Tæl antallet af gemte produkter.
 function updateSavedCount() {
   let savedCount = 0;
 
@@ -224,15 +238,15 @@ function updateSavedCount() {
   favoritesFilter.textContent = `Saved (${savedCount})`;
 }
 
+// Opret og vis produktkortene.
 function showDeals() {
   dealsTrack.replaceChildren();
 
   let visibleCount = 0;
 
   for (const product of deals) {
-    // && betyder "og". ! betyder "ikke".
-    // Spring over varen, hvis vi kun viser favoritter,
-    // og varen ikke er gemt.
+    // Spring over produkter, der ikke er gemt,
+    // når favoritfilteret er slået til.
     if (showOnlyFavorites && !product.saved) {
       continue;
     }
@@ -258,7 +272,7 @@ function showDeals() {
     updateFavoriteButton(favoriteButton, product);
 
     favoriteButton.addEventListener("click", function () {
-      // Skifter mellem true og false.
+      // Skift mellem true og false.
       product.saved = !product.saved;
 
       updateFavoriteButton(favoriteButton, product);
@@ -279,7 +293,7 @@ function showDeals() {
     const title = document.createElement("h3");
     title.textContent = product.name;
 
-    // Aritmetiske operatorer: -, * og /.
+    // Beregn prisen efter rabat.
     const reducedPrice = product.originalPrice * (1 - product.discount / 100);
 
     const price = document.createElement("p");
@@ -293,6 +307,7 @@ function showDeals() {
     crossedOutPrice.textContent = formatPrice(product.originalPrice);
 
     oldPrice.append("Was: ", crossedOutPrice);
+
     card.append(imageWrapper, title, price, oldPrice);
     dealsTrack.appendChild(card);
   }
@@ -317,6 +332,7 @@ favoritesFilter.addEventListener("click", function () {
   favoritesFilter.setAttribute("aria-pressed", String(showOnlyFavorites));
 
   showDeals();
+
   dealsTrack.scrollLeft = 0;
   updateDealArrows();
 });
@@ -325,6 +341,7 @@ favoritesFilter.addEventListener("click", function () {
 // PILE TIL PRODUKTRÆKKEN
 // ========================================
 
+// Deaktiver pilene, når man ikke kan bladre længere.
 function updateDealArrows() {
   const maximumScroll = dealsTrack.scrollWidth - dealsTrack.clientWidth;
 
@@ -372,4 +389,5 @@ backToTopButton.addEventListener("click", function () {
   });
 });
 
+// Vis produkterne, når siden åbner.
 showDeals();

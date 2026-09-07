@@ -859,3 +859,40 @@ main {
 #deals-next::before {
   transform: translate(-65%, -50%) rotate(45deg);
 }
+
+/* Banner med billeder og videoer */
+.hero.media-hero {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #191919;
+  color: white;
+}
+
+.banner-media {
+  width: 100%;
+  aspect-ratio: 3.5 / 1;
+  background-color: #191919;
+}
+
+.banner-media img,
+.banner-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Separat række, så pilene ikke dækker videoens betjening */
+.media-hero .banner-footer {
+  margin: 0;
+  padding: 12px 24px;
+  background-color: #191919;
+}
+
+@media (max-width: 600px) {
+  .banner-media {
+    aspect-ratio: 16 / 9;
+  }
+}
