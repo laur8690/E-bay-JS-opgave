@@ -95,13 +95,18 @@
         </div>
       </section>
 
-      <!-- Kategorier -->
-      <section class="products-section" aria-labelledby="technology-title">
-        <h2 id="technology-title">The future in your hands</h2>
+    <p id="deals-status" class="deals-status" aria-live="polite"></p>
 
-        <!-- JavaScript indsætter kategorierne her -->
-        <div id="technology-grid" class="technology-grid"></div>
-      </section>
+        <div class="deals-carousel">
+          <button
+            id="deals-previous"
+            class="deal-arrow deal-arrow-left"
+            type="button"
+            aria-label="Previous products"
+            aria-controls="deals-track"
+          >
+            ‹
+          </button>
 
       <!-- Det lyse banner -->
       <section class="shopping-banner">
@@ -148,19 +153,6 @@
             Saved (0)
           </button>
         </div>
-
-        <p id="deals-status" class="deals-status" aria-live="polite"></p>
-
-        <div class="deals-carousel">
-          <button
-            id="deals-previous"
-            class="deal-arrow deal-arrow-left"
-            type="button"
-            aria-label="Previous products"
-            aria-controls="deals-track"
-          >
-            ‹
-          </button>
 
           <!-- JavaScript indsætter produkterne her -->
           <div id="deals-track" class="deals-track"></div>

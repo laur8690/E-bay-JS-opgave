@@ -111,43 +111,6 @@ searchForm.addEventListener("submit", function (event) {
 showBanner();
 
 // ========================================
-// KATEGORIER
-// ========================================
-
-// Array med objekter.
-const technologyCategories = [
-  { name: "Laptops", image: "images/laptop.jpg" },
-  { name: "Computer parts", image: "images/keyboard.jpg" },
-  { name: "Smartphones", image: "images/phone.jpg" },
-  { name: "Enterprise networking", image: "images/computer.jpg" },
-  { name: "Tablets and eBooks", image: "images/tablet.jpg" },
-  { name: "Storage and blank media", image: "images/storage.jpg" },
-  { name: "Lenses and filters", image: "images/lens.jpg" },
-];
-
-const technologyGrid = document.querySelector("#technology-grid");
-
-function showTechnologyCategories() {
-  for (const category of technologyCategories) {
-    const card = document.createElement("figure");
-    card.classList.add("technology-card");
-
-    const image = document.createElement("img");
-    image.src = category.image;
-    image.alt = category.name;
-    image.loading = "lazy";
-
-    const caption = document.createElement("figcaption");
-    caption.textContent = category.name;
-
-    card.append(image, caption);
-    technologyGrid.appendChild(card);
-  }
-}
-
-showTechnologyCategories();
-
-// ========================================
 // TODAY'S DEALS
 // Alle priser her er eksempler til opgaven.
 // ========================================
