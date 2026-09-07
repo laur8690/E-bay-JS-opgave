@@ -6,17 +6,17 @@
 const banners = [
   {
     type: "video",
-    src: "media/banner-1.mp4",
+    src: "Media/sko1.mp4",
     description: "Fashion campaign",
   },
   {
     type: "image",
-    src: "media/banner-2.jpg",
+    src: "Media/pc.jpg",
     description: "Electronics campaign",
   },
   {
     type: "video",
-    src: "media/banner-3.mp4",
+    src: "Media/sko2.mp4",
     description: "Home and garden campaign",
   },
 ];
@@ -64,9 +64,12 @@ function showBanner() {
   if (selectedBanner.type === "video") {
     mediaElement = document.createElement("video");
 
-    mediaElement.controls = true;
+    mediaElement.muted = true;
+    mediaElement.autoplay = true;
+    mediaElement.loop = true;
     mediaElement.playsInline = true;
-    mediaElement.preload = "metadata";
+    mediaElement.controls = false;
+    mediaElement.preload = "auto";
 
     mediaElement.setAttribute("aria-label", selectedBanner.description);
   } else {
@@ -76,6 +79,13 @@ function showBanner() {
 
   mediaElement.src = selectedBanner.src;
   bannerMedia.appendChild(mediaElement);
+
+  // Start videoen. Vis betjening, hvis browseren blokerer autoplay.
+  if (selectedBanner.type === "video") {
+    mediaElement.play().catch(function () {
+      // Ingen videoknapper skal vises
+    });
+  }
 
   // Opdater den aktive prik.
   const dots = dotsContainer.querySelectorAll(".banner-dot");
@@ -132,50 +142,58 @@ searchForm.addEventListener("submit", function (event) {
 const deals = [
   {
     id: 1,
-    name: "Laptop – 8GB RAM, 256GB SSD",
-    image: "images/laptop.jpg",
-    originalPrice: 499,
+    name: "Crocs Classic Clog Navy",
+    image: "Media/crocs.webp",
+    originalPrice: 59,
     discount: 20,
     saved: false,
   },
   {
     id: 2,
-    name: "Dyson Pure Hot + Cool Purifier | Refurbished",
-    image: "images/dyson.jpg",
-    originalPrice: 349,
-    discount: 20,
+    name: "Ninja Espresso & Coffee Machine",
+    image: "Media/kaffe.webp",
+    originalPrice: 699,
+    discount: 15,
     saved: false,
   },
   {
     id: 3,
-    name: "Logitech G29 Racing Wheel and Pedals",
-    image: "images/wheel.jpg",
-    originalPrice: 299,
+    name: "Logitech MX Master Wireless Mouse",
+    image: "Media/mus.webp",
+    originalPrice: 129,
     discount: 20,
     saved: false,
   },
   {
     id: 4,
-    name: "Gucci Grey Browline Men's Sunglasses",
-    image: "images/sunglasses.jpg",
+    name: "MSI Esports Gaming Monitor",
+    image: "Media/pc1.webp",
     originalPrice: 249,
-    discount: 15,
+    discount: 20,
     saved: false,
   },
   {
     id: 5,
-    name: "xTool F1 Portable Laser Engraver",
-    image: "images/laser.jpg",
-    originalPrice: 999,
-    discount: 20,
+    name: "Samsung Curved Gaming Monitor",
+    image: "Media/pc2.webp",
+    originalPrice: 349,
+    discount: 15,
     saved: false,
   },
   {
     id: 6,
-    name: "NARWAL Robot Vacuum and Mop",
-    image: "images/vacuum.jpg",
-    originalPrice: 799,
+    name: "Shark Stratos Cordless Vacuum Cleaner",
+    image: "Media/støvsuger.webp",
+    originalPrice: 499,
     discount: 20,
+    saved: false,
+  },
+  {
+    id: 7,
+    name: "EcoFlow Portable Power Station",
+    image: "Media/ting.webp",
+    originalPrice: 699,
+    discount: 25,
     saved: false,
   },
 ];
