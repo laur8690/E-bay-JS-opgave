@@ -196,6 +196,47 @@ const deals = [
     discount: 25,
     saved: false,
   },
+
+  {
+    id: 8,
+    name: "Dyson Purifier Hot+Cool",
+    image: "Media/dyson.webp",
+    originalPrice: 349,
+    discount: 20,
+    saved: false,
+  },
+  {
+    id: 9,
+    name: "Apple MacBook Air",
+    image: "Media/macbook.webp",
+    originalPrice: 899,
+    discount: 15,
+    saved: false,
+  },
+  {
+    id: 10,
+    name: "Logitech G29 Racing Wheel and Pedals",
+    image: "Media/ret.webp",
+    originalPrice: 299,
+    discount: 20,
+    saved: false,
+  },
+  {
+    id: 11,
+    name: "Robot Vacuum and Mop",
+    image: "Media/robot.webp",
+    originalPrice: 799,
+    discount: 20,
+    saved: false,
+  },
+  {
+    id: 12,
+    name: "Designer Sunglasses",
+    image: "Media/solbriller.webp",
+    originalPrice: 249,
+    discount: 15,
+    saved: false,
+  },
 ];
 
 const dealsTrack = document.querySelector("#deals-track");
@@ -209,7 +250,7 @@ let showOnlyFavorites = false;
 
 // Returnerer en pris med to decimaler.
 function formatPrice(price) {
-  return "$" + price.toFixed(2);
+  return price.toFixed(2).replace(".", ",") + " kr.";
 }
 
 // Opdater hjertets ikon og tilgængelige beskrivelse.
@@ -374,11 +415,12 @@ function moveDeals(direction) {
     return;
   }
 
-  // Kortets bredde plus afstanden mellem kortene.
-  const distance = firstCard.getBoundingClientRect().width + 16;
+  const cardWidth = firstCard.getBoundingClientRect().width + 16;
+
+  const cardsPerView = Math.floor(dealsTrack.clientWidth / cardWidth);
 
   dealsTrack.scrollBy({
-    left: distance * direction,
+    left: cardWidth * cardsPerView * direction,
     behavior: "smooth",
   });
 }
@@ -409,3 +451,218 @@ backToTopButton.addEventListener("click", function () {
 
 // Vis produkterne, når siden åbner.
 showDeals();
+
+// ========================================
+// NYHEDSBREV POPUP
+// ========================================
+
+// Opret styling til popup
+const popupStyle = document.createElement("style");
+
+popupStyle.textContent = `
+  .newsletter-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .newsletter-popup {
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    border-radius: 24px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  .newsletter-popup h2 {
+    margin: 0 0 12px;
+    font-size: 32px;
+  }
+
+  .newsletter-popup p {
+    margin-bottom: 25px;
+    font-size: 16px;
+    color: #555;
+  }
+
+  .newsletter-popup input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    border: 1px solid #999;
+    border-radius: 30px;
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .newsletter-popup .subscribe-button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 30px;
+    background: #3665f3;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .newsletter-popup .subscribe-button:hover {
+    background: #254fd2;
+  }
+
+  .newsletter-close {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    border: none;
+    background: none;
+    font-size: 28px;
+    cursor: pointer;
+  }
+
+  .newsletter-code {
+    margin-top: 18px;
+    font-weight: 600;
+    color: #191919;
+  }
+
+  .newsletter-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.newsletter-benefits li {
+  margin-bottom: 4px;
+}
+`;
+
+document.head.appendChild(popupStyle);
+
+// ========================================
+// NYHEDSBREV POPUP
+// ========================================
+
+// Tredje array i projektet
+const newsletterBenefits = [
+  "Exclusive subscriber-only offers",
+  "Early access to selected deals",
+  "The latest products and inspiration",
+];
+
+// Lav selve popup'en
+function showNewsletterPopup() {
+  const overlay = document.createElement("div");
+  overlay.classList.add("newsletter-overlay");
+
+  const popup = document.createElement("div");
+  popup.classList.add("newsletter-popup");
+
+  popup.innerHTML = `
+    <button class="newsletter-close" type="button">×</button>
+
+    <h2>Save 10%</h2>
+
+   <p>
+  Sign up for our newsletter and enjoy 10% off your next purchase.
+</p>
+
+    <ul class="newsletter-benefits"></ul>
+
+    <input
+      type="email"
+      class="newsletter-email"
+      placeholder="Enter your email"
+    >
+
+    <button class="subscribe-button" type="button">
+      Get 10% off
+    </button>
+
+    <p class="newsletter-code"></p>
+  `;
+
+  // Hent listen fra popup'en
+  const benefitsList = popup.querySelector(".newsletter-benefits");
+
+  // Lav ét listepunkt for hver fordel i arrayet
+  for (const benefit of newsletterBenefits) {
+    const listItem = document.createElement("li");
+    listItem.textContent = benefit;
+    benefitsList.appendChild(listItem);
+  }
+
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+
+  // Luk popup
+  const closeButton = popup.querySelector(".newsletter-close");
+
+  closeButton.addEventListener("click", function () {
+    overlay.remove();
+  });
+
+  // Tilmeld nyhedsbrev
+  const subscribeButton = popup.querySelector(".subscribe-button");
+  const emailInput = popup.querySelector(".newsletter-email");
+  const codeText = popup.querySelector(".newsletter-code");
+
+  subscribeButton.addEventListener("click", function () {
+    if (emailInput.value === "") {
+      codeText.textContent = "Please enter your email.";
+      return;
+    }
+
+    codeText.textContent = "Your discount code: SAVE10";
+    emailInput.style.display = "none";
+    subscribeButton.style.display = "none";
+  });
+
+  // Luk hvis man klikker udenfor boksen
+  overlay.addEventListener("click", function (event) {
+    if (event.target === overlay) {
+      overlay.remove();
+    }
+  });
+}
+
+// Vis popup 1 sekund efter siden åbner
+setTimeout(showNewsletterPopup, 1000);
+
+// ========================================
+// KATEGORIER
+// ========================================
+
+// Array med kategorier
+const categories = [
+  "Saved",
+  "Electronics",
+  "Motors",
+  "Fashion",
+  "Collectibles and art",
+  "Sports",
+  "Health and beauty",
+  "Home and garden",
+  "Deals",
+];
+
+// Find kategorimenuen i HTML
+const categoriesMenu = document.querySelector(".categories");
+
+// Lav en knap for hver kategori
+for (const category of categories) {
+  const categoryButton = document.createElement("button");
+
+  categoryButton.type = "button";
+  categoryButton.textContent = category;
+
+  categoriesMenu.appendChild(categoryButton);
+}
