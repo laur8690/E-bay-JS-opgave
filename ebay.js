@@ -666,3 +666,5 @@ for (const category of categories) {
 
   categoriesMenu.appendChild(categoryButton);
 }
+
+//hej
